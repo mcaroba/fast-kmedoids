@@ -316,6 +316,7 @@ subroutine fast_kmedoids_iterative(D, nclusters, tmax, n_inits, n_iso, incoheren
   if( verbosity >= 1 )then
     write(*,"(A,A,A)") "# Iteration; Residual ('", trim(adjustl(incoherence)), "' incoherence criterion)"
   end if
+!$OMP parallel do schedule(static,1) private(M_ii,M_i,C_i,R)
   do i = 1, n_inits
     if( M_init_mode(1:6) == "random" )then
 !     Set up initial M
@@ -326,6 +327,7 @@ subroutine fast_kmedoids_iterative(D, nclusters, tmax, n_inits, n_iso, incoheren
     end if
     call fast_kmedoids(D, tmax, M_ii, M_i, C_i)
     call get_incoherence(D, M_i, C_i, incoherence, R)
+!$OMP critical
     if( R < R_prev )then
       M = M_i
       C = C_i
@@ -334,7 +336,9 @@ subroutine fast_kmedoids_iterative(D, nclusters, tmax, n_inits, n_iso, incoheren
         write(*,*) i, R
       end if
     end if
+!$OMP end critical
   end do
+!$OMP end parallel do
 
   if( allocated(M_init) )deallocate( M_init )
 
