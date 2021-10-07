@@ -64,3 +64,14 @@ def kMedoids(D, k, tmax=100, init_Ms="random", n_iso=None, n_inits=1, incoherenc
 
     # return results
     return M, C_dict
+
+
+def cluster_incoherence(D, M, C, incoherence="rel"):
+    if isinstance(C, dict):
+        C_array = np.empty(len(D), dtype=int)
+        for i in C:
+            C_array[C[i]] = i
+        C = C_array
+    I = kmod.get_incoherence(D, M, C, incoherence)
+    return I
+
