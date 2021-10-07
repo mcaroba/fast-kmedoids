@@ -71,7 +71,11 @@ subroutine fast_kmedoids(D, tmax, M_init, M, C)
       cluster_size(C(i)) = cluster_size(C(i)) + 1
     end do
 
-    if( t == 0 )return
+    if( t == 0 )then
+      M = M - 1
+      C = C - 1
+      return
+    end if
 
 !   Update clusters
     do k = 1, nclusters
@@ -141,7 +145,7 @@ subroutine find_isolated(D, nclusters, niso, M)
     return
   end if
 
-  npts = size(D,2)
+  npts = size(D, 2)
   allocate( summed_D(1:npts) )
 
   av_D = sum(D) / float(npts)**2
@@ -159,7 +163,7 @@ subroutine find_isolated(D, nclusters, niso, M)
     do j = 1, i-1
       k = M(j)
       do l = 1, npts
-        if( l /= k )then
+        if( all(M /= l) )then
           summed_D(l) = summed_D(l) + D(l, k)
         end if
       end do
@@ -371,26 +375,20 @@ subroutine get_incoherence(D, M, C, incoherence, R)
 
     cluster_size = 0
     do i = 1, npts
-      cluster_size(C(i)+1) = cluster_size(C(i)+1) + 1
+      cluster_size(C(i) + 1) = cluster_size(C(i) + 1) + 1
     end do
 
     R = 0.d0
-    do i = 1, nclusters
-      k = M(i)+1
-      do j = 1, npts
-        k2 = C(j) + 1
-        R = R + D(k2, k)/float(cluster_size(i)) 
-      end do
+    do i = 1, npts
+      k = M(C(i) + 1) + 1 
+      R = R + D(i, k)/float(cluster_size(C(i) + 1)) 
     end do
     deallocate( cluster_size )
   else if( incoherence == "tot" )then
     R = 0.d0
-    do i = 1, nclusters
-      k = M(i)+1
-      do j = 1, npts
-        k2 = C(j) + 1
-        R = R + D(k2, k) 
-      end do
+    do i = 1, npts
+      k = M(C(i) + 1) + 1
+      R = R + D(i, k)
     end do
   end if
 
