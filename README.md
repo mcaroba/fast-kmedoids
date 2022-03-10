@@ -1,8 +1,32 @@
-New kmedoids Python implementation that uses Fortran libraries and
-f2py for faster execution. Written by Miguel A. Caro and Patricia
-Hernández-León. Based on Cristian Bauckhage's implementation.
+# fast-kmedoids
 
-Currently under heavy development - better not to use unless you know
-what you're doing.
+*Copyright (c) 2021-2022 by Miguel A. Caro and Patricia Hernández-León*
 
-We will update license, etc., when this is in more decent shape.
+**fast-kmedoids** is a kmedoids Python implementation that uses Fortran libraries and
+f2py for faster execution. It has been written by **Miguel A. Caro** and **Patricia
+Hernández-León** based on Cristian Bauckhage's implementation.
+
+**fast-kmedoids** is released under the GNU General Public License version 3, see
+LICENSE.md file.
+
+## Installation
+
+### Prerrequisites
+
+- A Fortran compiler (the build script uses `gfortran`)
+- Numpy
+
+### Building the libraries
+
+Execute the build script:
+
+    ./build_libraries.sh
+
+Add the `src` directory to your Python path:
+
+    echo "export PYTHONPATH=$(pwd)/src:\$PYTHONPATH" >> ~/.bashrc
+    source ~/.bashrc
+
+## Usage
+
+See `example.py` for a typical use case.
