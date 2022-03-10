@@ -13,8 +13,8 @@ LICENSE.md file.
 
 ### Prerrequisites
 
-- A Fortran compiler (the build script uses `gfortran`)
 - Numpy
+- A Fortran compiler (successfully tested with `gfortran`)
 
 ### Building the libraries
 
