@@ -1,4 +1,4 @@
-! Copyright (c) 2021 Miguel A. Caro
+! Copyright (c) 2021-2022 Miguel A. Caro and Patricia Hernández-León
 ! Based on C. Bauckhage's Python implementation of kmedoids
 
 module kmedoids_module
