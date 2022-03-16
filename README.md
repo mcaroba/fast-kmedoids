@@ -22,9 +22,9 @@ Execute the build script:
 
     ./build_libraries.sh
 
-Add the `src` directory to your Python path:
+Add the root directory to your Python path:
 
-    echo "export PYTHONPATH=$(pwd)/src:\$PYTHONPATH" >> ~/.bashrc
+    echo "export PYTHONPATH=$(pwd):\$PYTHONPATH" >> ~/.bashrc
     source ~/.bashrc
 
 ## Usage
